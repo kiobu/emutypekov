@@ -1,0 +1,10 @@
+{
+    "account": {
+        "aid": "123456789abcdefedcba1234",
+        "nickname": "kiobu",
+		"password": "password",
+		"wipe": false,
+		"edition": "Edge Of Darkness"
+    },
+    "character": {}
+}
