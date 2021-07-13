@@ -1,11 +1,13 @@
 import { NestFactory } from '@nestjs/core';
-import { CoreModule } from './core/core.module';
+import { CommonModule } from './core/common.module';
 import { LoggerService } from './core/util/logger.service';
+
+import { CoreModule } from './core/core.module';
 
 import * as config from 'configs/server.json';
 
 async function bootstrap(logger: LoggerService) {
-  logger.log(CoreModule.Watermark);
+  logger.log(CommonModule.Watermark);
   const app = await NestFactory.create(CoreModule);
   await app.listen(config.port);
 }
