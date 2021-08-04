@@ -1,7 +1,8 @@
-import { Controller, Get } from '@nestjs/common';
-import { assert } from 'console';
+import { Controller, Get, Post } from '@nestjs/common';
 import { LoggerService } from 'src/core/util/logger.service';
-import { ITarkovResponse, TarkovResponseErr, TarkovResponseOk } from './system.types';
+import { ITarkovResponse, TarkovResponseEmpty, TarkovResponseErr, TarkovResponseOk } from './response.types';
+
+import * as config from 'configs/server.json'
 
 @Controller()
 export class SystemController {
@@ -15,11 +16,16 @@ export class SystemController {
   }
 
   @Get('debug')
-  debug(): ITarkovResponse<any> {
-    try {
-      return new TarkovResponseOk<string>("Success response.")
-    } catch (_) {
-      return new TarkovResponseErr("Failure response.")
+  debug(): ITarkovResponse<string> { 
+    return new TarkovResponseOk("200 OK.")
+  }
+
+  @Get('/launcher/server/connect')
+  launcher_server_connect(): object {
+    return {
+      backendUrl: `https://127.0.0.1:${config.port}/`,
+      name: "BEFTT",
+      editions: ["Standard"],
     }
   }
 }
