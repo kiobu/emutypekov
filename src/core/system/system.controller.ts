@@ -1,6 +1,7 @@
 import { Controller, Get } from '@nestjs/common';
+import { assert } from 'console';
 import { LoggerService } from 'src/core/util/logger.service';
-import { TarkovResponse, ResponseOk } from './system.types';
+import { ITarkovResponse, TarkovResponseErr, TarkovResponseOk } from './system.types';
 
 @Controller()
 export class SystemController {
@@ -14,7 +15,11 @@ export class SystemController {
   }
 
   @Get('debug')
-  debug(): TarkovResponse {
-    return new ResponseOk({ dummykey: 'dummyvalue' });
+  debug(): ITarkovResponse<any> {
+    try {
+      return new TarkovResponseOk<string>("Success response.")
+    } catch (_) {
+      return new TarkovResponseErr("Failure response.")
+    }
   }
 }

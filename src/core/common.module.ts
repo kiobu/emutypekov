@@ -9,9 +9,9 @@ import * as boxen from 'boxen';
   providers: [LoggerService], // Other system/core providers are here.
 })
 export class CommonModule {
-  static readonly Server: string = 'KATE';
+  static readonly Server: string = 'BEFTT';
   static readonly Version: string = 'v0.0.1-a';
-  static readonly Website: string = 'kate.kiobu.dev';
+  static readonly Website: string = 'justemutarkov.eu';
   static readonly Watermark: string =
     '\n' +
     boxen(

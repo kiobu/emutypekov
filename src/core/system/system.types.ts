@@ -1,23 +1,30 @@
-export interface TarkovResponse {
+export interface ITarkovResponse<T> {
   err: number;
   errmsg: string | null;
-  data: Record<string, any>;
+  data: T;
 }
 
-export interface ResponseOk extends TarkovResponse {
-  err: 0;
-  errmsg: null;
-  data: Record<string, any>;
-}
+export class TarkovResponseOk<T> implements ITarkovResponse<T> {
+  readonly err = 0
+  readonly errmsg = null
+  data: T;
 
-export const NullResponse: TarkovResponse = {
-  err: 0,
-  errmsg: null,
-  data: {},
-};
-
-export class ResponseOk implements ResponseOk {
-  constructor(data: Record<string, any>) {
+  constructor(data: T) {
     this.data = data;
   }
+}
+
+export class TarkovResponseErr implements ITarkovResponse<null> {
+  readonly err = 1;
+  errmsg: string;
+  readonly data = null;
+  constructor(errmsg: string) {
+    this.errmsg = errmsg;
+  }
+}
+
+export class TarkovResponseEmpty implements ITarkovResponse<string> {
+  readonly err = 0;
+  readonly errmsg = null;
+  readonly data = "";
 }
