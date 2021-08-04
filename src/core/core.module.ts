@@ -7,6 +7,6 @@ import { GameModules } from 'src/game/game.modules';
 */
 
 @Module({
-  imports: [CommonModule, GameModules],
+  imports: [CommonModule, GameModules]
 })
 export class CoreModule {}

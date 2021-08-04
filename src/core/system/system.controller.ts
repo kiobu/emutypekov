@@ -1,5 +1,5 @@
 import { Controller, Get, Post } from '@nestjs/common';
-import { LoggerService } from 'src/core/util/logger.service';
+import { LoggerService } from 'src/core/common/util/logger.service';
 import { ITarkovResponse, TarkovResponseEmpty, TarkovResponseErr, TarkovResponseOk } from './response.types';
 
 import * as config from 'configs/server.json'

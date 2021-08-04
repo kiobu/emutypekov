@@ -1,25 +1,12 @@
 import { Module } from '@nestjs/common';
+import { CommonModule } from '../common/common.module';
 import { SystemController } from './system.controller';
-
-import * as boxen from 'boxen';
+import { SystemService } from './system.service';
 
 @Module({
   controllers: [SystemController],
-  providers: [],
-  exports: []
+  providers: [SystemService],
+  exports: [],
+  imports: []
 })
-export class SystemModule {
-  private static readonly Server: string = 'BEFTT';
-  private static readonly Version: string = 'v0.0.1-a';
-  private static readonly Website: string = 'justemutarkov.eu';
-  static readonly Watermark: string =
-    '\n' +
-    boxen(
-      `${SystemModule.Server}\n${SystemModule.Version}\n${SystemModule.Website}`,
-      {
-        padding: 1,
-        margin: 1,
-        align: 'center',
-      },
-    );
-}
+export class SystemModule { }

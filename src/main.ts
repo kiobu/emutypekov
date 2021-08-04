@@ -1,14 +1,14 @@
 import { NestFactory } from '@nestjs/core';
-import { SystemModule } from './core/system/system.module'
-import { LoggerService } from './core/util/logger.service';
+import { LoggerService } from './core/common/util/logger.service';
 import { CommonService } from './core/common/common.service';
+import { SystemService } from './core/system/system.service';
 
 import { CoreModule } from './core/core.module';
 
 import * as compression from "compression";
 
 async function bootstrap(logger: LoggerService) {
-  logger.log(SystemModule.Watermark);
+  logger.log(SystemService.Watermark);
 
   const app = await NestFactory.create(CoreModule);
   app.use(compression())
