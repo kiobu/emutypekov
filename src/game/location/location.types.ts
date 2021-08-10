@@ -1,0 +1,1 @@
+export type Location = Record<string, unknown>
