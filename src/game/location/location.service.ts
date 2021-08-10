@@ -1,5 +1,5 @@
 import { Injectable } from "@nestjs/common";
-import { Location } from "./location.types";
+import { Location, LocationsResponse } from "./location.types";
 import { IOService } from "src/core/common/util/io/io.service";
 
 @Injectable()
@@ -9,19 +9,18 @@ export class LocationService {
 
     constructor(io: IOService) {
         this.io = io;
-    }
 
-    getLocations(): Array<Location> {
         let l: Array<Location> = []
         this.io.readDirSync('./db/locations/').forEach(file => {
             l.push(this.io.deserialize(this.io.readFileSync(`./db/locations/${file}`)) as Location);
         })
-        return l;
 
+        this.locations = l;
     }
-    getLocationsResponse() {
+
+    getLocationsResponse(): LocationsResponse {
         let obj = {"locations": {}}
-        this.getLocations().forEach(location => {
+        this.locations.forEach(location => {
             obj.locations[location._Id] = location
         })
         return obj;
