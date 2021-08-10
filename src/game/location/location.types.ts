@@ -1,1 +1,1 @@
-export type Location = Record<string, unknown>
+export type Location = Record<string, any>

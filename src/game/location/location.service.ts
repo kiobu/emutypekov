@@ -13,11 +13,17 @@ export class LocationService {
 
     getLocations(): Array<Location> {
         let l: Array<Location> = []
-
         this.io.readDirSync('./db/locations/').forEach(file => {
             l.push(this.io.deserialize(this.io.readFileSync(`./db/locations/${file}`)) as Location);
         })
-
         return l;
+
+    }
+    getLocationsResponse() {
+        let obj = {"locations": {}}
+        this.getLocations().forEach(location => {
+            obj.locations[location._Id] = location
+        })
+        return obj;
     }
 }

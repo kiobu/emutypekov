@@ -12,7 +12,7 @@ export class RaidController {
 
 
   @Get("client/locations")
-  getLocations(): ITarkovResponse<Array<Location>> {
-    return new TarkovResponseOk(this.loc.getLocations());
+  getLocations(): ITarkovResponse<Record<string, unknown>> {
+    return new TarkovResponseOk(this.loc.getLocationsResponse());
   }
 }
