@@ -5,7 +5,7 @@ export class Profile {
   account: Account;
   character: Character;
 
-  constructor(obj: Record<string, Account> | Record<string, Character>) {
+  constructor(obj: Record<string, Account | Character>) {
     this.account = obj['account'];
     this.character = obj['character'];
   }
