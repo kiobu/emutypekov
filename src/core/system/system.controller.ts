@@ -1,13 +1,16 @@
 import { Controller, Get, Post } from '@nestjs/common';
 import { LoggerService } from 'src/core/common/util/logger.service';
 import { ITarkovResponse, TarkovResponseEmpty, TarkovResponseErr, TarkovResponseOk } from './response.types';
+import { CommonService } from '../common/common.service';
 
 import * as config from 'configs/server.json'
 
 @Controller()
 export class SystemController {
-  constructor(logger: LoggerService) {
+  readonly common: CommonService
+  constructor(logger: LoggerService, common: CommonService) {
     logger.log('Started system controller.');
+    this.common = common;
   }
 
   @Get('/')
@@ -23,9 +26,9 @@ export class SystemController {
   @Get('/launcher/server/connect')
   launcher_server_connect(): object {
     return {
-      backendUrl: `https://127.0.0.1:${config.port}/`,
+      backendUrl: `https://127.0.0.1:${this.common.serverConfig.port}/`,
       name: "BEFTT",
-      editions: ["Standard"],
+      editions: [],
     }
   }
 }

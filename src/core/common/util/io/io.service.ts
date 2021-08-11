@@ -4,6 +4,7 @@ import * as fs from 'fs'
 
 @Injectable()
 export class IOService {
+    lstatSync: Function = fs.lstatSync
     readDirSync(input: fs.PathLike): string[] {
         assert(fs.lstatSync(input).isDirectory())
         return fs.readdirSync(input);

@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { CommonModule } from '../common/common.module';
+import { CommonService } from '../common/common.service';
 import { SystemController } from './system.controller';
 import { SystemService } from './system.service';
 
@@ -7,6 +7,6 @@ import { SystemService } from './system.service';
   controllers: [SystemController],
   providers: [SystemService],
   exports: [],
-  imports: []
+  imports: [CommonService]
 })
 export class SystemModule { }
