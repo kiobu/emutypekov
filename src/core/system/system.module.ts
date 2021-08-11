@@ -7,6 +7,6 @@ import { SystemService } from './system.service';
   controllers: [SystemController],
   providers: [SystemService],
   exports: [],
-  imports: [CommonService]
+  imports: [CommonService],
 })
-export class SystemModule { }
+export class SystemModule {}

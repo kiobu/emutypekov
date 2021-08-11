@@ -1,5 +1,5 @@
-import { Injectable } from "@nestjs/common";
-import { CommonService } from "../common/common.service";
+import { Injectable } from '@nestjs/common';
+import { CommonService } from '../common/common.service';
 
 import * as boxen from 'boxen';
 
@@ -18,5 +18,5 @@ export class SystemService {
         align: 'center',
       },
     );
-  constructor(private common: CommonService) { }
+  constructor(private common: CommonService) {}
 }

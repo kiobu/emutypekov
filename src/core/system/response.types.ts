@@ -5,8 +5,8 @@ export interface ITarkovResponse<T> {
 }
 
 export class TarkovResponseOk<T> implements ITarkovResponse<T> {
-  readonly err = 0
-  readonly errmsg = null
+  readonly err = 0;
+  readonly errmsg = null;
   data: T;
 
   constructor(data: T) {
@@ -26,5 +26,5 @@ export class TarkovResponseErr implements ITarkovResponse<null> {
 export class TarkovResponseEmpty implements ITarkovResponse<string> {
   readonly err = 0;
   readonly errmsg = null;
-  readonly data = "";
+  readonly data = '';
 }

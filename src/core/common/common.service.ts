@@ -1,7 +1,7 @@
-import { Injectable } from "@nestjs/common";
-import * as config from 'configs/server.json'
+import { Injectable } from '@nestjs/common';
+import * as config from 'configs/server.json';
 
 @Injectable()
 export class CommonService {
-    readonly serverConfig = config;
+  readonly serverConfig = config;
 }

@@ -4,7 +4,7 @@ import { ProfileModule } from './profile/profile.module';
 import { RaidModule } from './raid/raid.module';
 
 // All the game modules.
-@Module({ 
-    imports: [RaidModule, LocationModule, ProfileModule] 
+@Module({
+  imports: [RaidModule, LocationModule, ProfileModule],
 })
 export class GameModules {}

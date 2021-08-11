@@ -1,5 +1,5 @@
-export type Location = Record<string, any>
+export type Location = Record<string, any>;
 
 export type LocationsResponse = {
-    locations: Record<string, Location>
-}
+  locations: Record<string, Location>;
+};

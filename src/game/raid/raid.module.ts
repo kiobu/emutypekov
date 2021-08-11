@@ -6,6 +6,6 @@ import { RaidController } from './raid.controller';
   controllers: [RaidController],
   providers: [],
   exports: [],
-  imports: [LocationModule]
+  imports: [LocationModule],
 })
-export class RaidModule { }
+export class RaidModule {}
