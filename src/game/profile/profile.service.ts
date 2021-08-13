@@ -40,7 +40,7 @@ export class ProfileService {
 
   getProfileById(id: string): Profile {
     return this.profiles.filter((profile) => {
-      profile.character._id === id;
+      return profile.account.aid === id;
     })[0];
   }
 }
