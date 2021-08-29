@@ -4,14 +4,21 @@ import { CommonService } from './core/common/common.service';
 import { SystemService } from './core/system/system.service';
 
 import { CoreModule } from './core/core.module';
+import { DebugModule } from './core/system/debug/debug.module';
 
 import * as compression from 'compression';
+
+const DODEBUG = true;
 
 async function bootstrap(logger: LoggerService) {
   logger.log(SystemService.Watermark);
 
   const app = await NestFactory.create(CoreModule);
   app.use(compression());
+
+  if (DODEBUG) {
+    DebugModule.graph(app);
+  }
 
   const common = app.select(CoreModule).get(CommonService);
 
