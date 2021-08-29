@@ -2,6 +2,9 @@ import { Injectable } from '@nestjs/common';
 import { Location, LocationsResponse } from './location.types';
 import { IOService } from 'src/core/common/util/io/io.service';
 
+/************************************************************************
+TODO: Rewrite to use interface instead of IOService for SQL and JSON dbs.
+*************************************************************************/
 @Injectable()
 export class LocationService {
   readonly io: IOService;
