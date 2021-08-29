@@ -7,8 +7,8 @@ export enum Currency {
   EUR = '569668774bdc2da2298b4568',
 }
 
-export interface ItemOfType<T> {
-  createItem<T>(): ItemOfType<T>;
+export interface Item<T> {
+  createItem<T>(): Item<T>;
   _id: ItemID;
   _name: string;
   _parent: ItemID;

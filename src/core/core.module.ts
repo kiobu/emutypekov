@@ -1,4 +1,5 @@
 import { Module } from '@nestjs/common';
+import { SystemModule } from './system/system.module';
 import { CommonModule } from './common/common.module';
 import { GameModules } from 'src/game/game.modules';
 
@@ -7,6 +8,6 @@ import { GameModules } from 'src/game/game.modules';
  */
 
 @Module({
-  imports: [CommonModule, GameModules],
+  imports: [SystemModule, CommonModule, GameModules],
 })
 export class CoreModule {}

@@ -5,9 +5,9 @@ import * as boxen from 'boxen';
 
 @Injectable()
 export class SystemService {
-  private static readonly Server: string = 'BEFTT';
+  private static readonly Server: string = 'EFT TS';
   private static readonly Version: string = 'v0.0.1-a';
-  private static readonly Website: string = 'justemutarkov.eu';
+  private static readonly Website: string = 'github.com/kiobu';
   static readonly Watermark: string =
     '\n' +
     boxen(

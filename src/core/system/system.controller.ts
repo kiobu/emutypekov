@@ -8,8 +8,6 @@ import {
 } from './response.types';
 import { CommonService } from '../common/common.service';
 
-import * as config from 'configs/server.json';
-
 @Controller()
 export class SystemController {
   readonly common: CommonService;
@@ -31,7 +29,7 @@ export class SystemController {
   @Get('/launcher/server/connect')
   launcher_server_connect(): Record<string, unknown> {
     return {
-      backendUrl: `https://127.0.0.1:${this.common.serverConfig.port}/`,
+      backendUrl: `https://${this.common.serverConfig.address}:${this.common.serverConfig.port}`,
       name: 'BEFTT',
       editions: [],
     };
