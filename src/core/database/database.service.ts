@@ -25,9 +25,9 @@ export class DatabaseService {
     // eslint-disable-next-line prettier/prettier
     const databaseType: DatabaseType = common.serverConfig.dbType as DatabaseType;
 
-    if (databaseType == DatabaseType.JSON) {
+    if (databaseType === DatabaseType.JSON) {
       this.loadDatabase<JSONDatabase>(new JSONDatabase(new LoggerService()));
-    } else if (databaseType == DatabaseType.SQL) {
+    } else if (databaseType === DatabaseType.SQL) {
       this.loadDatabase<SQLDatabase>(new SQLDatabase(new LoggerService()));
     } else {
       logger.error('Unknown database type.');
