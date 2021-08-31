@@ -1,10 +1,7 @@
-import { Injectable, Logger } from '@nestjs/common';
-import {
-  IDatabase,
-  SQLDatabase,
-  JSONDatabase,
-  DatabaseType,
-} from './database.types';
+import { Injectable } from '@nestjs/common';
+import { IDatabase, DatabaseType } from './database.types';
+import { JSONDatabase } from './json.database';
+import { SQLDatabase } from './sql.database';
 import { CommonService } from '../common/common.service';
 import { LoggerService } from '../common/util/logger.service';
 
@@ -15,7 +12,6 @@ export class DatabaseService {
 
   loadDatabase<T extends IDatabase>(db: T): void {
     this.database = db;
-
     this.logger.success(`Loaded database type ${db.dbType}`);
   }
 
@@ -26,9 +22,9 @@ export class DatabaseService {
     const databaseType: DatabaseType = common.serverConfig.dbType as DatabaseType;
 
     if (databaseType === DatabaseType.JSON) {
-      this.loadDatabase<JSONDatabase>(new JSONDatabase(new LoggerService()));
+      this.loadDatabase<JSONDatabase>(new JSONDatabase());
     } else if (databaseType === DatabaseType.SQL) {
-      this.loadDatabase<SQLDatabase>(new SQLDatabase(new LoggerService()));
+      this.loadDatabase<SQLDatabase>(new SQLDatabase());
     } else {
       logger.error('Unknown database type.');
     }

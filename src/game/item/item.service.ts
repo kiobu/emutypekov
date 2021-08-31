@@ -9,7 +9,6 @@ TODO: Rewrite to use interface instead of IOService for SQL and JSON dbs.
 export class ItemService {
   readonly io: IOService;
   readonly items: Array<Item<any>>;
-  // readonly items_response: Record<ItemID, Item>;
 
   constructor(io: IOService) {
     this.io = io;
