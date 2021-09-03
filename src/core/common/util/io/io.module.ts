@@ -1,7 +1,7 @@
-import { Module } from '@nestjs/common';
+import { Global, Module } from '@nestjs/common';
 import { IO } from 'src/core/common/util/io/io.service';
 
-// All the game modules.
+@Global()
 @Module({
   providers: [IO],
   exports: [IO],
