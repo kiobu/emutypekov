@@ -9,6 +9,6 @@ import { DatabaseModule } from './database/database.module';
  */
 
 @Module({
-  imports: [DatabaseModule, SystemModule, CommonModule, GameModules],
+  imports: [DatabaseModule.register(), SystemModule, CommonModule, GameModules],
 })
 export class CoreModule {}

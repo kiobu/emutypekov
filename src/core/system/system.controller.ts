@@ -10,11 +10,7 @@ import { CommonService } from '../common/common.service';
 
 @Controller()
 export class SystemController {
-  readonly common: CommonService;
-  constructor(logger: LoggerService, common: CommonService) {
-    logger.log('Started system controller.');
-    this.common = common;
-  }
+  constructor(private readonly common: CommonService) {}
 
   @Get('/')
   index(): string {
