@@ -15,7 +15,7 @@ export class RaidController {
   }
 
   @Get('client/locations')
-  client_locations(): ITarkovResponse<LocationsResponse> {
+  getLocations(): ITarkovResponse<LocationsResponse> {
     return new TarkovResponseOk(this.loc.getLocationsResponse());
   }
 }

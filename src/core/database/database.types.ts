@@ -1,5 +1,3 @@
-import { ItemDatabase } from './providers/item.database';
-
 export enum DatabaseType {
   SQL = 'sql',
   JSON = 'json',
@@ -7,5 +5,12 @@ export enum DatabaseType {
 
 export interface IDatabase {
   readonly dbType: DatabaseType;
-  readonly items: ItemDatabase;
+}
+
+export class SQLDatabase implements IDatabase {
+  dbType: DatabaseType.SQL;
+}
+
+export class JSONDatabase implements IDatabase {
+  dbType: DatabaseType.JSON;
 }

@@ -1,5 +1,4 @@
 {
     "port": 443,
-    "address": "localhost",
-    "dbType": "json"
+    "address": "localhost"
 }

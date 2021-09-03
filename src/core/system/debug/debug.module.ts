@@ -10,10 +10,6 @@ import { join } from 'path';
 // For some reason, I can't get Nest to copy debug/static to the build. Manually copying it over does
 // allow the dependency graph to work, however.
 
-/***********************************************************
-TODO: Look into why static files aren't being built to dist/
-************************************************************/
-
 @Module({
   imports: [
     ServeStaticModule.forRoot({
