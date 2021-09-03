@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
-import { IOService } from 'src/core/common/util/io/io.service';
+import { IO } from 'src/core/common/util/io/io.service';
 
 // All the game modules.
 @Module({
-  providers: [IOService],
-  exports: [IOService],
+  providers: [IO],
+  exports: [IO],
 })
 export class IOModule {}

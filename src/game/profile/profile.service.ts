@@ -1,23 +1,20 @@
 import { Injectable } from '@nestjs/common';
-import { IOService } from 'src/core/common/util/io/io.service';
+import { IO } from 'src/core/common/util/io/io.service';
 import { Profile, Character } from './profile.types';
 
 @Injectable()
 export class ProfileService {
-  readonly io: IOService;
   readonly profiles: Array<Profile>;
 
-  constructor(io: IOService) {
-    this.io = io;
-
+  constructor() {
     const p: Array<Profile> = [];
-    this.io.readDirSync('./profiles/').forEach((profile) => {
-      if (this.io.lstatSync(`./profiles/${profile}`).isDirectory()) {
+    IO.readDirSync('./profiles/').forEach((profile) => {
+      if (IO.lstatSync(`./profiles/${profile}`).isDirectory()) {
         try {
           p.push(
             new Profile(
-              this.io.deserialize(
-                this.io.readFileSync(`./profiles/${profile}/profile.json`),
+              IO.deserialize(
+                IO.readFileSync(`./profiles/${profile}/profile.json`),
               ) as Record<string, any>,
             ),
           );

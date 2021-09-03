@@ -1,24 +1,20 @@
 import { Injectable } from '@nestjs/common';
 import { Location, LocationsResponse } from './location.types';
-import { IOService } from 'src/core/common/util/io/io.service';
+import { IO } from 'src/core/common/util/io/io.service';
 
 /************************************************************************
 TODO: Rewrite to use interface instead of IOService for SQL and JSON dbs.
 *************************************************************************/
 @Injectable()
 export class LocationService {
-  readonly io: IOService;
+  readonly io: IO;
   readonly locations: Array<Location>;
 
-  constructor(io: IOService) {
-    this.io = io;
-
+  constructor() {
     const l: Array<Location> = [];
-    this.io.readDirSync('./db/locations/').forEach((file) => {
+    IO.readDirSync('./db/locations/').forEach((file) => {
       l.push(
-        this.io.deserialize(
-          this.io.readFileSync(`./db/locations/${file}`),
-        ) as Location,
+        IO.deserialize(IO.readFileSync(`./db/locations/${file}`)) as Location,
       );
     });
 
