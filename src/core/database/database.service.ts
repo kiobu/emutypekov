@@ -6,7 +6,7 @@ import { CommonService } from '../common/common.service';
 import { LoggerService } from '../common/util/logger.service';
 
 @Injectable()
-export class DatabaseService {
+export class MasterDatabaseService {
   database: IDatabase;
   logger: LoggerService;
 

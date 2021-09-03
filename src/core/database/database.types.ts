@@ -1,4 +1,4 @@
-import { LoggerService } from '../common/util/logger.service';
+import { ItemDatabase } from './providers/item.database';
 
 export enum DatabaseType {
   SQL = 'sql',
@@ -7,4 +7,5 @@ export enum DatabaseType {
 
 export interface IDatabase {
   readonly dbType: DatabaseType;
+  readonly items: ItemDatabase;
 }
