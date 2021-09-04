@@ -1,11 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { IO } from 'src/core/common/util/io/io.service';
-import { ShardType } from './shard.types';
+import { IShard, ShardType } from './shard.types';
 import * as fs from 'fs';
 
 // Shard representing one block of the global database.
 @Injectable()
-export class JSONShard {
+export class JSONShard implements IShard {
   private readonly data: any;
 
   constructor(shardType: ShardType, path: fs.PathLike) {
