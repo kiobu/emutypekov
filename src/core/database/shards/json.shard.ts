@@ -1,13 +1,18 @@
 import { Injectable } from '@nestjs/common';
 import { IO } from 'src/core/common/util/io/io.service';
+import { ShardType } from './shard.types';
 import * as fs from 'fs';
 
-// This is where we will load the items DB from json file.
+// Shard representing one block of the global database.
 @Injectable()
 export class JSONShard {
-  readonly data: any;
+  private readonly data: any;
 
-  constructor(path: fs.PathLike) {
+  constructor(shardType: ShardType, path: fs.PathLike) {
     this.data = IO.deserialize(IO.readFileSync(path));
+  }
+
+  read(): any {
+    return this.data;
   }
 }

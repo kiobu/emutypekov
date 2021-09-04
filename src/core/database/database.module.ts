@@ -1,10 +1,11 @@
 import { DynamicModule, Global, Module } from '@nestjs/common';
 import { IOModule } from '../common/util/io/io.module';
 
-import { SQLDatabaseModule } from './sql.database.module';
-import { JSONDatabaseModule } from './json.database.module';
+import { SQLDatabaseService } from './sql.database.service';
+import { JSONDatabaseService } from './json.database.service';
 
 import * as config from 'configs/server.json';
+import { DatabaseService } from './database.service';
 
 @Global()
 @Module({})
@@ -13,16 +14,19 @@ export class DatabaseModule {
     if (config.useDatabase === 'json') {
       console.log('Using JSON.');
       return {
-        module: JSONDatabaseModule,
+        module: DatabaseModule,
         imports: [IOModule],
-        providers: [],
+        // eslint-disable-next-line prettier/prettier
+        providers: [{ provide: DatabaseService, useClass: JSONDatabaseService }],
+        exports: [DatabaseService],
       };
     } else {
       console.log('Using SQL.');
       return {
-        module: SQLDatabaseModule,
+        module: DatabaseModule,
         imports: [IOModule],
-        providers: [],
+        providers: [{ provide: DatabaseService, useClass: SQLDatabaseService }],
+        exports: [DatabaseService],
       };
     }
   }

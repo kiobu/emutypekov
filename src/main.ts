@@ -8,7 +8,7 @@ import { DebugModule } from './core/system/debug/debug.module';
 
 import * as compression from 'compression';
 
-const DODEBUG = true;
+const DODEBUG = false;
 
 async function bootstrap(logger: LoggerService) {
   logger.log(SystemService.Watermark);
