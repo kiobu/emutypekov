@@ -1,10 +1,14 @@
 import { Injectable } from '@nestjs/common';
 import { assert } from 'console';
 import * as fs from 'fs';
+import * as path from 'path';
 
 @Injectable()
 export class IO {
-  static lstatSync: fs.StatSyncFn<fs.PathLike> = fs.lstatSync;
+  static resolve = path.resolve;
+  static isDir(input: fs.PathLike) {
+    return fs.lstatSync(input).isDirectory();
+  }
   static readDirSync(input: fs.PathLike): string[] {
     assert(fs.lstatSync(input).isDirectory());
     return fs.readdirSync(input);

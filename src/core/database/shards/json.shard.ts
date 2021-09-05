@@ -6,10 +6,25 @@ import * as fs from 'fs';
 // Shard representing one block of the global database.
 @Injectable()
 export class JSONShard implements IShard {
-  private readonly data: any;
+  private readonly data: any; // Maybe should add a type here for files/data blocks? (can be TarkovData or Array<TarkovData>?)
+  private readonly shardType: ShardType;
 
   constructor(shardType: ShardType, path: fs.PathLike) {
-    this.data = IO.deserialize(IO.readFileSync(path));
+    this.shardType = shardType;
+
+    if (IO.isDir(path)) {
+      this.data = [];
+      const dir = IO.readDirSync(path);
+      for (const file in dir) {
+        this.data.push(
+          IO.deserialize(
+            IO.readFileSync(IO.resolve(path as string, dir[file])),
+          ),
+        );
+      }
+    } else {
+      this.data = IO.deserialize(IO.readFileSync(path));
+    }
   }
 
   read(): any {

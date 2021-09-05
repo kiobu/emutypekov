@@ -8,7 +8,7 @@ import { ItemController } from './item.controller';
 @Module({
   controllers: [ItemController],
   providers: [ItemService],
-  imports: [IOModule, DatabaseModule],
+  imports: [IOModule],
   exports: [ItemService],
 })
 export class ItemModule {}

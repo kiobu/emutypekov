@@ -9,7 +9,7 @@ export class ProfileService {
   constructor() {
     const p: Array<Profile> = [];
     IO.readDirSync('./profiles/').forEach((profile) => {
-      if (IO.lstatSync(`./profiles/${profile}`).isDirectory()) {
+      if (IO.isDir(`./profiles/${profile}`)) {
         try {
           p.push(
             new Profile(

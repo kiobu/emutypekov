@@ -7,4 +7,4 @@ export enum ShardType {
   Customization,
   Bots,
   Locations,
-};
+}

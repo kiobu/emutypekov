@@ -14,7 +14,7 @@ export class ProfileController {
   }
 
   @Get('client/game/profile/list')
-  getProfileList(): ITarkovResponse<Array<Character>> {
+  client_game_profile_list(): ITarkovResponse<Array<Character>> {
     return new TarkovResponseOk(this.profile.getCharacters());
   }
 }

@@ -4,18 +4,22 @@ import {
   TarkovResponseEmpty,
   TarkovResponseOk,
 } from 'src/core/system/response.types';
-import { LocationsResponse } from '../location/location.types';
 import { LocationService } from '../location/location.service';
+import { Location } from '../location/location.types';
+import { TarkovID } from '../item/item.types';
 
 @Controller()
 export class RaidController {
-  readonly loc: LocationService;
-  constructor(loc: LocationService) {
-    this.loc = loc;
-  }
+  constructor(private readonly locations: LocationService) {}
 
   @Get('client/locations')
-  getLocations(): ITarkovResponse<LocationsResponse> {
-    return new TarkovResponseOk(this.loc.getLocationsResponse());
+  client_locations(): ITarkovResponse<Record<TarkovID, Location>> {
+    const obj = { locations: {} };
+
+    this.locations.getAllLocations().forEach((location) => {
+      obj.locations[location._Id] = location;
+    });
+
+    return new TarkovResponseOk(obj);
   }
 }

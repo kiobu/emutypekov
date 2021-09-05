@@ -6,4 +6,6 @@ import { ShardType } from './shards/shard.types';
 export class JSONDatabaseService {
   // eslint-disable-next-line prettier/prettier
   readonly itemsShard: JSONShard = new JSONShard(ShardType.Items, './db/items/items.json');
+  // eslint-disable-next-line prettier/prettier
+  readonly locationsShard: JSONShard = new JSONShard(ShardType.Locations, './db/locations/');
 }

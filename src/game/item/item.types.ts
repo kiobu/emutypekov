@@ -1,4 +1,5 @@
-export type ItemID = string;
+export type TarkovID = string;
+export type ItemID = TarkovID;
 export type TemplateID = ItemID;
 
 export enum Currency {
