@@ -5,4 +5,5 @@ import { IShard } from './shards/shard.types';
 export abstract class DatabaseService {
   readonly itemsShard: IShard;
   readonly locationsShard: IShard;
+  readonly profilesShard: IShard;
 }

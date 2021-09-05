@@ -1,5 +1,6 @@
 export interface IShard {
   read(); // Return all data for this shard.
+  shardType: ShardType;
 }
 
 export enum ShardType {
@@ -7,4 +8,5 @@ export enum ShardType {
   Customization,
   Bots,
   Locations,
+  Profiles,
 }

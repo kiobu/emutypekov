@@ -7,7 +7,7 @@ import * as fs from 'fs';
 @Injectable()
 export class JSONShard implements IShard {
   private readonly data: any; // Maybe should add a type here for files/data blocks? (can be TarkovData or Array<TarkovData>?)
-  private readonly shardType: ShardType;
+  readonly shardType: ShardType;
 
   constructor(shardType: ShardType, path: fs.PathLike) {
     this.shardType = shardType;
