@@ -17,4 +17,10 @@ export class ProfileController {
   client_game_profile_list(): ITarkovResponse<Array<Character>> {
     return new TarkovResponseOk(this.profile.getCharacters());
   }
+
+  // Debugging route for locations.
+  @Get('profile/debugging')
+  profile_debugging() {
+    return this.profile.getProfileById('023456789abcdefedcba1234')['character'];
+  }
 }

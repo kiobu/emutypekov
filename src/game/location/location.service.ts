@@ -4,9 +4,12 @@ import { Location } from './location.types';
 
 @Injectable()
 export class LocationService {
-  constructor(private readonly database: DatabaseService) {}
+  private readonly locations: Array<Location>;
+  constructor(private readonly database: DatabaseService) {
+    this.locations = this.database.locationsShard.read()['Locations'];
+  }
 
   getAllLocations(): Array<Location> {
-    return this.database.locationsShard.read();
+    return this.locations;
   }
 }

@@ -7,9 +7,12 @@ TODO: Rewrite to use interface instead of IOService for SQL and JSON dbs.
 *************************************************************************/
 @Injectable()
 export class ItemService {
-  constructor(private readonly database: DatabaseService) {}
+  private readonly items: Record<ItemID, Item<any>>;
+  constructor(private readonly database: DatabaseService) {
+    this.items = this.database.itemsShard.read()['Items'];
+  }
 
   getItemsRecord(): Record<string, unknown> {
-    return this.database.itemsShard.read();
+    return this.items;
   }
 }
