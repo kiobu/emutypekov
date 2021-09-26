@@ -10,13 +10,13 @@ import { TarkovID } from '../item/item.types';
 
 @Controller()
 export class RaidController {
-  constructor(private readonly locations: LocationService) {}
+  constructor(private readonly locationsService: LocationService) {}
 
   @Get('client/locations')
   client_locations(): ITarkovResponse<Record<TarkovID, Location>> {
     const obj = { locations: {} };
 
-    this.locations.getAllLocations().forEach((location) => {
+    this.locationsService.getLocationsArray().forEach((location) => {
       obj.locations[location._Id] = location;
     });
 

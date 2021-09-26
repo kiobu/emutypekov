@@ -1,4 +1,4 @@
-import { Controller, Post, Get } from '@nestjs/common';
+import { Controller, Post, Get, Param } from '@nestjs/common';
 import { Profile, Character } from './profile.types';
 import {
   ITarkovResponse,
@@ -8,13 +8,15 @@ import { ProfileService } from './profile.service';
 
 @Controller()
 export class ProfileController {
-  readonly profile: ProfileService;
-  constructor(profile: ProfileService) {
-    this.profile = profile;
-  }
+  constructor(private readonly profile: ProfileService) {}
 
   @Get('client/game/profile/list')
   client_game_profile_list(): ITarkovResponse<Array<Character>> {
     return new TarkovResponseOk(this.profile.getCharacters());
+  }
+
+  @Get('debug/profile/:id')
+  debug_profile(@Param() params): ITarkovResponse<Profile> {
+    return new TarkovResponseOk(this.profile.getProfileById(params.id));
   }
 }

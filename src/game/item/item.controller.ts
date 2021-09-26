@@ -12,8 +12,6 @@ export class ItemController {
 
   @Get('client/items')
   client_items(): ITarkovResponse<Record<ItemID, Item<unknown>>> {
-    return new TarkovResponseOk(
-      this.itemService.getItemsRecord() as Record<ItemID, Item<unknown>>,
-    );
+    return new TarkovResponseOk(this.itemService.getItems());
   }
 }

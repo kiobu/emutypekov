@@ -25,9 +25,8 @@ export class SystemController {
   @Get('/launcher/server/connect')
   launcher_server_connect(): Record<string, unknown> {
     return {
-      backendUrl: `https://${this.common.serverConfig.address}:${this.common.serverConfig.port}`,
-      name: 'BEFTT',
-      editions: [],
+      Url: `https://${this.common.serverConfig.address}`,
+      name: 'SPT-AKI',
     };
   }
 }
