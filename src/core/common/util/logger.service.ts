@@ -15,4 +15,8 @@ export class LoggerService {
   error(message) {
     this._logger.log(`[ERROR]: ${message}`);
   }
+
+  debug(message) {
+    this._logger.log(`[DEBUG]: ${message}`);
+  }
 }
