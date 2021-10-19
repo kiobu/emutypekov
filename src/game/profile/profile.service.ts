@@ -2,13 +2,15 @@ import { Injectable } from '@nestjs/common';
 import { IO } from 'src/core/common/util/io/io.service';
 import { Profile, Character, Account } from './profile.types';
 import { TarkovID } from '../item/item.types';
-import { LoggerService } from 'src/core/common/util/logger.service';
+import { Logger } from '@nestjs/common';
 
 @Injectable()
 export class ProfileService {
+  private readonly logger = new Logger(ProfileService.name);
+
   public profiles: Record<TarkovID, Profile> = {};
 
-  constructor(private readonly logger: LoggerService) {
+  constructor() {
     this.loadProfiles();
 
     this.logger.debug(`Local accounts found: ${this.getAccounts().length}`);

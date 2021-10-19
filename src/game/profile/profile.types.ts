@@ -1,12 +1,17 @@
+import { TarkovID } from '../item/item.types';
+
+// TODO: Elaborate on this in the future.
 export type Character = Record<string, unknown>;
-export type Account = Record<string, unknown>;
+
+export class Account {
+  aid: TarkovID;
+  nickname: string;
+  password: string;
+  wipe: boolean;
+  edition: string; // TODO: Edition enum?
+}
 
 export class Profile {
   account: Account;
   character: Character;
-
-  constructor(obj: Record<string, Account | Character>) {
-    this.account = obj['account'];
-    this.character = obj['character'];
-  }
 }

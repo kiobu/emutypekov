@@ -1,5 +1,4 @@
 import { Global, Module } from '@nestjs/common';
-import { LoggerService } from './util/logger.service';
 import { CommonService } from './common.service';
 
 /*
@@ -9,7 +8,7 @@ import { CommonService } from './common.service';
 
 @Global()
 @Module({
-  providers: [LoggerService, CommonService],
-  exports: [LoggerService, CommonService],
+  providers: [CommonService],
+  exports: [CommonService],
 })
 export class CommonModule {}

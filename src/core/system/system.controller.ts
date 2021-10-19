@@ -1,5 +1,4 @@
-import { Controller, Get, Post } from '@nestjs/common';
-import { LoggerService } from 'src/core/common/util/logger.service';
+import { Controller, Get, Post, UseInterceptors } from '@nestjs/common';
 import {
   ITarkovResponse,
   TarkovResponseEmpty,
@@ -7,6 +6,7 @@ import {
   TarkovResponseOk,
 } from './response.types';
 import { CommonService } from '../common/common.service';
+import { SystemService } from './system.service';
 
 @Controller()
 export class SystemController {
@@ -23,10 +23,11 @@ export class SystemController {
   }
 
   @Get('/launcher/server/connect')
-  launcher_server_connect(): Record<string, unknown> {
+  launcher_server_connect(): Record<string, any> {
     return {
-      Url: `https://${this.common.serverConfig.address}`,
-      name: 'SPT-AKI',
+      backendUrl: `https://${this.common.serverConfig.address}:${this.common.serverConfig.port}/`,
+      name: SystemService.Server,
+      editions: ['Edge of Darkness', 'Left Behind'],
     };
   }
 }
