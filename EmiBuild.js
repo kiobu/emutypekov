@@ -8,11 +8,6 @@ const chalk = require('chalk');
 
 // Build process ------------------------------
 
-if (fs.existsSync(`build/${COMPILED_NAME}`)) {
-  console.log(chalk.blue('removing old build...'));
-  fs.rmSync(`build/${COMPILED_NAME}`);
-}
-
 if (!fs.existsSync('build')) {
   console.log(chalk.blue('creating build/...'));
   fs.mkdirSync('build');
@@ -31,7 +26,7 @@ console.log(chalk.blue('compiling executable...'));
   console.log(chalk.green(`compiled server to: build/${COMPILED_NAME}`));
 
   // I should find a better way to do this.
-  console.log(chalk.blue('copying dist/ to build/...'));
+  console.log(chalk.blue('copying dist/* to build/...'));
   fs.copy('dist/', 'build/', function (err) {
     if (err) return console.error(err);
     console.log(chalk.green('... done'));
@@ -52,7 +47,27 @@ console.log(chalk.blue('compiling executable...'));
           console.log(chalk.green('... done'));
 
           console.log(chalk.green('all done copying!'));
-          console.log(chalk.green('==> build finished!'));
+
+          console.log(chalk.blue('replacing icon...'));
+
+          // This doesn't seem to work yet
+          const { exec } = require('child_process');
+          exec(
+            'start dev/ResourceHacker.exe -addoverwrite "build/Server.exe", "build/Server.exe", "iconset.ico", ICONGROUP, MAINICON, 0',
+            (error, stdout, stderr) => {
+              if (error) {
+                console.log(chalk.red(`error: ${error.message}`));
+                return;
+              }
+              if (stderr) {
+                console.log(chalk.red(`stderr: ${stderr}`));
+                return;
+              }
+              console.log(chalk.blue(`stdout: ${stdout}`));
+              console.log(chalk.green('... done'));
+              console.log(chalk.green('==> build finished!'));
+            },
+          );
         });
       });
     });

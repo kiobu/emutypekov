@@ -23,8 +23,8 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
-    "emi:build": "npm run build && npm run copyStaticToDistWindows && node EmiBuild.js",
-    "emi:build:linux": "npm run build && npm run copyStaticToDistLinux && node EmiBuild.js"
+    "emi:build": "rimraf build && npm run build && npm run copyStaticToDistWindows && node EmiBuild.js",
+    "emi:build:linux": "rimraf build && npm run build && npm run copyStaticToDistLinux && node EmiBuild.js"
   },
   "dependencies": {
     "@nestjs/common": "^8.0.0",

@@ -1,5 +1,5 @@
 {
     "port": 443,
-    "address": "localhost",
+    "address": "127.0.0.1",
     "useDatabase": "json"
 }

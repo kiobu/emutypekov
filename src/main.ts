@@ -5,7 +5,7 @@ import { SystemService } from './core/system/system.service';
 import { CoreModule } from './core/core.module';
 import { DebugModule } from './core/system/debug/debug.module';
 
-import { InOutInterceptor } from './core/system/system.interceptor';
+import { SystemInterceptor } from './core/system/system.interceptor';
 
 import * as compression from 'compression';
 import { Logger } from '@nestjs/common';
@@ -31,7 +31,7 @@ async function bootstrap(logger: Logger) {
   });
 
   app.use(compression({ filter: _shouldCompress }));
-  app.useGlobalInterceptors(new InOutInterceptor());
+  app.useGlobalInterceptors(new SystemInterceptor());
   app.useStaticAssets(join(__dirname, '..', 'web', 'static'));
   app.setBaseViewsDir(join(__dirname, '..', 'web', 'views'));
   app.setViewEngine('hbs');

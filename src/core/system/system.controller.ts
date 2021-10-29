@@ -26,7 +26,7 @@ export class SystemController {
   @Get('/launcher/server/connect')
   launcher_server_connect(): Record<string, any> {
     return {
-      backendUrl: `https://${this.common.serverConfig.address}:${this.common.serverConfig.port}/`,
+      backendUrl: `https://${this.common.serverConfig.address}:${this.common.serverConfig.port}`,
       name: SystemService.Server,
       editions: ['Edge of Darkness', 'Left Behind'],
     };
