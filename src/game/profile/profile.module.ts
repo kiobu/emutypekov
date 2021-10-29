@@ -7,5 +7,6 @@ import { IOModule } from 'src/core/common/util/io/io.module';
   controllers: [ProfileController],
   providers: [ProfileService],
   imports: [IOModule],
+  exports: [ProfileService],
 })
 export class ProfileModule {}

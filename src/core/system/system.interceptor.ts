@@ -13,7 +13,7 @@ export class SystemInterceptor implements NestInterceptor {
 
   intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
     const req = context.getArgByIndex(0);
-    this.logger.log(
+    this.logger.debug(
       `${context.getType()}: ${req.socket.remoteAddress} => Request: ${
         req.url
       }`,

@@ -59,6 +59,10 @@ export class ProfileService {
     });
   }
 
+  getAccountTypes(): Array<string> {
+    return IO.readDirSync(IO.resolve('database', 'patterns', 'profiles'));
+  }
+
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   createProfile() {}
 }
