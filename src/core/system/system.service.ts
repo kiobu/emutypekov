@@ -25,7 +25,7 @@ export class SystemService {
     );
 
   static generateCert() {
-    const ALWAYS_REGENERATE = true;
+    const ALWAYS_REGENERATE = false;
 
     if (ALWAYS_REGENERATE) {
       this.logger.log('ALWAYS_GENERATE = TRUE');
@@ -77,6 +77,8 @@ export class SystemService {
       return { cert, key };
     } else {
       if (IO.exists(certFile) && IO.exists(keyFile)) {
+        this.logger.log(`Found existing X.509 cert in ${dir}.`);
+
         cert = IO.readFileSync(certFile);
         key = IO.readFileSync(keyFile);
 

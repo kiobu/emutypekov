@@ -1,4 +1,4 @@
-import { Controller, Get, Post, UseInterceptors } from '@nestjs/common';
+import { Controller, Get, Post, Render, UseInterceptors } from '@nestjs/common';
 import {
   ITarkovResponse,
   TarkovResponseEmpty,
@@ -13,8 +13,9 @@ export class SystemController {
   constructor(private readonly common: CommonService) {}
 
   @Get('/')
-  index(): string {
-    return 'Hello world!';
+  @Render('home')
+  index(): any {
+    return { h: 'Welcome to EmiTarkov.' };
   }
 
   @Get('debug')

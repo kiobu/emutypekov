@@ -9,10 +9,13 @@ import { InOutInterceptor } from './core/system/system.interceptor';
 
 import * as compression from 'compression';
 import { Logger } from '@nestjs/common';
+import { NestExpressApplication } from '@nestjs/platform-express';
+
+import { join } from 'path';
 
 const DODEBUG = true;
 
-// Don't use zlib on launcher requests.
+// Don't use zlib on launcher requests or requests with x-no-compression.
 const _shouldCompress = (req, res): boolean =>
   req.url.includes('launcher') || req.headers['x-no-compression']
     ? false
@@ -23,17 +26,15 @@ async function bootstrap(logger: Logger) {
 
   const cert = SystemService.generateCert();
 
-  const app = await NestFactory.create(CoreModule);
-
-  // Passing anything into httpsOptions makes the server not respond to any requests... not sure why...
-  /*
-  const app = await NestFactory.create(CoreModule, {
+  const app = await NestFactory.create<NestExpressApplication>(CoreModule, {
     httpsOptions: cert,
   });
-  */
 
   app.use(compression({ filter: _shouldCompress }));
   app.useGlobalInterceptors(new InOutInterceptor());
+  app.useStaticAssets(join(__dirname, '..', 'web', 'static'));
+  app.setBaseViewsDir(join(__dirname, '..', 'web', 'views'));
+  app.setViewEngine('hbs');
 
   if (DODEBUG) {
     DebugModule.graph(app);
