@@ -7,15 +7,14 @@
   "license": "UNLICENSED",
   "scripts": {
     "prebuild": "rimraf dist",
-    "build": "nest build",
+    "build": "nest build && npm run copyStaticToDistWindows",
+    "build:linux": "nest build && npm run copyStaticToDistLinux",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
-
     "copyStaticToDistWindows": "xcopy /e /k /h /i /Y web dist\\web",
     "copyStaticToDistLinux": "cp -r ./web/ ./dist/web/",
     "start:dev": "npm run copyStaticToDistWindows && nest start --watch",
     "start:dev:linux": "npm run copyStaticToDistLinux && nest start --watch",
-
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
@@ -23,7 +22,9 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json"
+    "test:e2e": "jest --config ./test/jest-e2e.json",
+    "emi:build": "npm run build && npm run copyStaticToDistWindows && node EmiBuild.js",
+    "emi:build:linux": "npm run build && npm run copyStaticToDistLinux && node EmiBuild.js"
   },
   "dependencies": {
     "@nestjs/common": "^8.0.0",
@@ -31,8 +32,11 @@
     "@nestjs/platform-express": "^8.0.0",
     "@nestjs/serve-static": "^2.2.2",
     "boxen": "^5.0.1",
+    "chalk": "^4.1.2",
     "compression": "^1.7.4",
+    "fs-extra": "^10.0.0",
     "hbs": "^4.1.2",
+    "pkg": "^5.4.0",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
     "rxjs": "^7.2.0",
