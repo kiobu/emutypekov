@@ -43,7 +43,7 @@ async function bootstrap(logger: Logger) {
   try {
     await app.listen(common.serverConfig.port, common.serverConfig.address);
     logger.log(
-      `${common.serverConfig.address} is listening on port ${common.serverConfig.port}.`,
+      `${SystemService.Server} is listening on ${common.serverConfig.address}:${common.serverConfig.port}.`,
     );
   } catch (e) {
     logger.error(e);
