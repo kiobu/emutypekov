@@ -23,10 +23,10 @@ export class IO {
   static exists(input: fs.PathLike): boolean {
     return fs.existsSync(input);
   }
-  static deserialize(input: string): Record<string, unknown> {
+  static deserialize(input: string): any {
     return JSON.parse(input);
   }
-  static serialize(input: Record<string, unknown>): string {
+  static serialize(input: any): string {
     return JSON.stringify(input);
   }
 }

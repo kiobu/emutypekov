@@ -8,7 +8,6 @@ export class TarkovResponseOk<T> implements ITarkovResponse<T> {
   readonly err = 0;
   readonly errmsg = null;
   data: T;
-
   constructor(data: T) {
     this.data = data;
   }
@@ -23,8 +22,8 @@ export class TarkovResponseErr implements ITarkovResponse<null> {
   }
 }
 
-export class TarkovResponseEmpty implements ITarkovResponse<string> {
+export class TarkovResponseEmpty implements ITarkovResponse<null> {
   readonly err = 0;
   readonly errmsg = null;
-  readonly data = '';
+  readonly data = null;
 }

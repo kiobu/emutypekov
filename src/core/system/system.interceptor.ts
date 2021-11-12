@@ -6,6 +6,7 @@ import {
 } from '@nestjs/common';
 import { Observable } from 'rxjs';
 import { Logger } from '@nestjs/common';
+import { Response } from 'express';
 
 @Injectable()
 export class SystemInterceptor implements NestInterceptor {
@@ -18,6 +19,10 @@ export class SystemInterceptor implements NestInterceptor {
         req.url
       }`,
     );
-    return next.handle().pipe();
+
+    const response: Response = context.switchToHttp().getResponse();
+    // response.setHeader('Content-Encoding', 'deflate');
+
+    return next.handle(); //.pipe();
   }
 }

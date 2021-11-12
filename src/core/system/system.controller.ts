@@ -6,8 +6,8 @@ import {
   TarkovResponseOk,
 } from './response.types';
 import { CommonService } from '../common/common.service';
-import { SystemService } from './system.service';
 import { ProfileService } from 'src/game/profile/profile.service';
+import { SystemService } from './system.service';
 
 @Controller()
 export class SystemController {
@@ -27,12 +27,20 @@ export class SystemController {
     return new TarkovResponseOk('200 OK.');
   }
 
-  @Get('/launcher/server/connect')
-  launcher_server_connect(): Record<string, any> {
+  @Get('singleplayer/bundles')
+  singleplayer_bundles(): Array<undefined> {
+    return [];
+  }
+
+  @Get('singleplayer/settings/version')
+  singleplayer_settings_version(): Record<string, string> {
     return {
-      backendUrl: `https://${this.common.serverConfig.address}:${this.common.serverConfig.port}`,
-      name: SystemService.Server,
-      editions: this.profile.getAccountTypes(),
+      Version: `${SystemService.Server} on ${SystemService.Version}`,
     };
+  }
+
+  @Get('client/game/start')
+  client_game_start(): ITarkovResponse<string> {
+    return new TarkovResponseEmpty();
   }
 }

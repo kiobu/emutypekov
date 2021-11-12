@@ -17,9 +17,7 @@ const DODEBUG = true;
 
 // Don't use zlib on launcher requests or requests with x-no-compression.
 const _shouldCompress = (req, res): boolean =>
-  req.url.includes('launcher') || req.headers['x-no-compression']
-    ? false
-    : compression.filter(req, res);
+  req.headers['x-no-compression'] ? false : compression.filter(req, res);
 
 async function bootstrap(logger: Logger) {
   logger.log(SystemService.Watermark);
@@ -30,7 +28,7 @@ async function bootstrap(logger: Logger) {
     httpsOptions: cert,
   });
 
-  app.use(compression({ filter: _shouldCompress }));
+  app.use(compression({ filter: _shouldCompress, encodings: ['deflate'] }));
   app.useGlobalInterceptors(new SystemInterceptor());
   app.useStaticAssets(join(__dirname, '..', 'web', 'static'));
   app.setBaseViewsDir(join(__dirname, '..', 'web', 'views'));

@@ -7,14 +7,13 @@ import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
 
 // Original code: https://github.com/paztek/nestjs-dependency-graph-example
-// For some reason, I can't get Nest to copy debug/static to the build. Manually copying it over does
-// allow the dependency graph to work, however.
+// Static module disabled for now.
 
 @Module({
   imports: [
-    ServeStaticModule.forRoot({
+    /*ServeStaticModule.forRoot({
       rootPath: join(__dirname, 'static'), // <-- path to the static files
-    }),
+    }),*/
   ],
 })
 export class DebugModule {
