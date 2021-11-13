@@ -7,7 +7,8 @@ import { Logger } from '@nestjs/common';
 export class LocaleService {
   readonly localeCodes: Array<LocaleCode>;
   readonly locales: Record<LocaleCode, Locale> = {};
-  private static readonly logger = new Logger(LocaleService.name);
+  private readonly logger = new Logger(LocaleService.name);
+
   constructor() {
     this.localeCodes = (
       IO.deserialize(
@@ -30,10 +31,18 @@ export class LocaleService {
           ),
         };
       } catch (e) {
-        LocaleService.logger.warn(
+        this.logger.warn(
           `Locale '${lv}' is missing files or could not be loaded! Skipping...\n${e}`,
         );
       }
+    }
+  }
+
+  getLocale(locale: LocaleCode): Locale {
+    if (this.locales[locale]) {
+      return this.locales[locale];
+    } else {
+      this.logger.error(`Locale not found: ${locale}`);
     }
   }
 }

@@ -20,6 +20,9 @@ export class IO {
   static writeFileSync(input: fs.PathLike, data: any): void {
     return fs.writeFileSync(input, data, 'utf-8');
   }
+  static mkdirSync(input: fs.PathLike): void {
+    return fs.mkdirSync(input);
+  }
   static exists(input: fs.PathLike): boolean {
     return fs.existsSync(input);
   }

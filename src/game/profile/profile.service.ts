@@ -16,7 +16,7 @@ export class ProfileService {
     this.logger.debug(`Local accounts found: ${this.getAccounts().length}`);
   }
 
-  loadProfiles(): void {
+  private loadProfiles(): void {
     IO.readDirSync('./profiles/').forEach((profile) => {
       if (IO.isDir(`./profiles/${profile}`)) {
         try {
@@ -31,7 +31,7 @@ export class ProfileService {
 
           this.profiles[p.account.id] = p as Profile;
         } catch (_) {
-          console.error(`${profile} is missing a profile.json.`);
+          this.logger.error(`${profile} is missing a profile.json.`);
         }
       }
     });
@@ -63,6 +63,20 @@ export class ProfileService {
     return IO.readDirSync(IO.resolve('database', 'patterns', 'profiles'));
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
-  createProfile() {}
+  createProfile(account: Account, character: Character): Profile {
+    const path = IO.resolve('profiles', account.nickname);
+
+    if (!IO.exists(path)) {
+      IO.mkdirSync(path);
+      IO.writeFileSync(
+        IO.resolve(path, 'profile.json'),
+        IO.serialize({ account, character }),
+      );
+      this.logger.log(`Created profile for ${account.nickname}.`);
+      return IO.deserialize(IO.readFileSync(IO.resolve(path, 'profile.json')));
+    } else {
+      this.logger.log(`Profile for ${account.nickname} already exists.`);
+      return IO.deserialize(IO.readFileSync(IO.resolve(path, 'profile.json')));
+    }
+  }
 }

@@ -12,6 +12,6 @@ export class LocaleController {
 
   @Get('client/menu/locale/:lang')
   debug_profile(@Param() params): ITarkovResponse<MenuLocale> {
-    return new TarkovResponseOk(this.localeS.locales[params.lang].menu);
+    return new TarkovResponseOk(this.localeS.getLocale(params.lang).menu);
   }
 }
