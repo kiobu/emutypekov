@@ -15,24 +15,21 @@ import { join } from 'path';
 
 const DODEBUG = true;
 
-// Don't use zlib on launcher requests or requests with x-no-compression.
+// Don't use zlib on requests with x-no-compression.
 const _shouldCompress = (req, res): boolean =>
   req.headers['x-no-compression'] ? false : compression.filter(req, res);
 
 async function bootstrap(logger: Logger) {
   logger.log(SystemService.Watermark);
 
-  const cert = SystemService.generateCert();
-
-  const app = await NestFactory.create<NestExpressApplication>(CoreModule, {
-    httpsOptions: cert,
-  });
+  const app = await NestFactory.create<NestExpressApplication>(CoreModule);
 
   app.use(compression({ filter: _shouldCompress, encodings: ['deflate'] }));
   app.useGlobalInterceptors(new SystemInterceptor());
   app.useStaticAssets(join(__dirname, '..', 'web', 'static'));
   app.setBaseViewsDir(join(__dirname, '..', 'web', 'views'));
   app.setViewEngine('hbs');
+  app.disable('etag');
 
   if (DODEBUG) {
     DebugModule.graph(app);

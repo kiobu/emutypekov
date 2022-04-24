@@ -4,14 +4,14 @@ import {
   TarkovResponseOk,
 } from 'src/core/system/response.types';
 import { ItemService } from './item.service';
-import { Item, ItemID } from './item.types';
+import { IItem, ItemID } from './item.types';
 
 @Controller()
 export class ItemController {
   constructor(private readonly itemService: ItemService) {}
 
   @Get('client/items')
-  client_items(): ITarkovResponse<Record<ItemID, Item<unknown>>> {
-    return new TarkovResponseOk(this.itemService.getItems());
+  client_items(): ITarkovResponse<Record<ItemID, IItem<unknown>>> {
+    return new TarkovResponseOk(this.itemService.getAllItems());
   }
 }

@@ -11,9 +11,9 @@ import { join } from 'path';
 
 @Module({
   imports: [
-    /*ServeStaticModule.forRoot({
-      rootPath: join(__dirname, 'static'), // <-- path to the static files
-    }),*/
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '../../../../', 'web', 'views', 'static'), // <-- path to the static files
+    }),
   ],
 })
 export class DebugModule {
@@ -55,7 +55,10 @@ function getTree(module: InjectorModule): Tree {
   const interestingChildrenModules = Array.from(module.imports).filter(
     (childModule) =>
       childModule.metatype.name !== 'InternalCoreModule' &&
-      childModule.metatype.name !== 'ConfigHostModule',
+      childModule.metatype.name !== 'ConfigHostModule' &&
+
+      childModule.metatype.name !== 'CommonModule' &&
+      childModule.metatype.name !== 'IOModule',
   );
 
   return {

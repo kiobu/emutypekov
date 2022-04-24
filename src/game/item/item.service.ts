@@ -1,20 +1,21 @@
 import { Injectable } from '@nestjs/common';
 import { IO } from 'src/core/common/util/io/io.service';
-import { Item, ItemID } from './item.types';
+import { IItem, ItemID } from './item.types';
+import { DatabaseService } from 'src/core/database/database.service';
+import { ItemsShard } from 'src/core/database/shards/shard.types';
 
-/************************************************************************
-TODO: Rewrite to use interface instead of IOService for SQL and JSON dbs.
-*************************************************************************/
 @Injectable()
 export class ItemService {
-  private readonly items: Record<ItemID, Item<any>>;
-  constructor() {
-    this.items = IO.deserialize(
-      IO.readFileSync(IO.resolve('database', 'items', 'items.json')),
-    ) as Record<ItemID, Item<any>>;
+  private readonly items: ItemsShard;
+  constructor(private readonly databaseService: DatabaseService) {
+    this.items = databaseService.itemsShard;
   }
 
-  getItems(): Record<ItemID, Item<any>> {
-    return this.items;
+  getAllItems(): Record<ItemID, IItem<any>> {
+    return this.items.data;
+  }
+
+  getItemByID(id: ItemID): IItem<any> {
+    return this.items.data[id] || null;
   }
 }

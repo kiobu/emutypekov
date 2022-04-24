@@ -10,9 +10,9 @@ import * as boxen from 'boxen';
 @Injectable()
 export class SystemService {
   private static readonly logger = new Logger(SystemService.name);
-  static readonly Server: string = 'EmiTarkov';
-  static readonly Version: string = 'v0.0.1-a';
-  static readonly Website: string = 'github.com/emiproject';
+  static readonly Server: string = 'EmuTypekov';
+  static readonly Version: string = 'v0.0.1-dev';
+  static readonly Website: string = 'github.com/kiobu/emutypekov';
   static readonly Watermark: string =
     '\n' +
     boxen(
@@ -24,6 +24,7 @@ export class SystemService {
       },
     );
 
+  // No need for this anymore since SPT-AKI modules don't require an SSL cert, but it's here for posterity.
   static generateCert() {
     const ALWAYS_REGENERATE = false;
 

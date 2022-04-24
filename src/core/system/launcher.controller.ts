@@ -24,4 +24,14 @@ export class LauncherController {
       editions: this.profile.getAccountTypes(),
     };
   }
+
+  @Get('/launcher/ping')
+  launcher_ping(): string {
+    return 'poggers!';
+  }
+
+  @Get('/launcher/server/version')
+  launcher_server_version(): string {
+    return SystemService.Version;
+  }
 }
