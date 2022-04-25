@@ -3,6 +3,9 @@ import { ItemID, IItem, TarkovID } from 'src/game/item/item.types';
 import { Location } from 'src/game/location/location.types';
 import { Profile } from 'src/game/profile/profile.types';
 
+// TODO: May want to use delete require.cache[x] instead of flushing and re-requiring
+// every file on every change, but not sure yet.
+
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface IDatabaseShard {
   data: any;
