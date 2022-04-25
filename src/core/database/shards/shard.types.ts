@@ -9,7 +9,7 @@ import { Profile } from 'src/game/profile/profile.types';
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface IDatabaseShard {
   data: any;
-  flush?: Function;
+  flush?: () => void;
 }
 
 export class ProfilesShard implements IDatabaseShard {
