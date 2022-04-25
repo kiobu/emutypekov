@@ -22,15 +22,17 @@ export class ProfileController {
 
   @Get('debug/profile/create/new')
   debug_profile_create(): void {
-    this.profile.createProfile(
+    let p = this.profile.createProfile(
       {
-        aid: '1234',
-        nickname: 'johndoe',
-        password: 'johndoe',
+        aid: '123456',
+        nickname: 'johndoe1',
+        password: 'johndoe1',
         wipe: false,
         edition: 'Standard',
       },
       {},
     );
+
+    console.log(p.account.aid);
   }
 }

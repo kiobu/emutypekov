@@ -6,51 +6,62 @@ import { Profile } from 'src/game/profile/profile.types';
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface IDatabaseShard {
   data: any;
+  flush?: Function;
 }
 
 export class ProfilesShard implements IDatabaseShard {
-  data: Record<TarkovID, Profile>;
+  data: Record<TarkovID, Profile> = {};
 
-  constructor() {
-    IO.readDirSync('./profiles/').forEach((profile) => {
-      if (IO.isDir(`./profiles/${profile}`)) {
+  flush(): void {
+    IO.readDirSync('profiles').forEach((profile) => {
+      if (IO.isDir(IO.resolve('profiles', profile))) {
         try {
-          const _p = require(IO.readFileSync(`./profiles/${profile}/profile.json`)) as Record<string, any>;
+          const _p = require(IO.resolve('profiles', profile, 'profile.json')) as Record<string, any>;
 
           const p = {
             account: _p['account'],
             character: _p['character'],
           };
 
-          this.data[p.account.id] = p as Profile;
+          this.data[p.account.aid] = p as Profile;
         } catch (_) {
           // Missing profile.json
         }
       }
     });
   }
+
+  constructor() {
+    this.flush();
+  }
 }
 
 export class ItemsShard implements IDatabaseShard {
-  data: Record<ItemID, IItem<any>>;
+  data: Record<ItemID, IItem<any>> = {};
+  
+  flush() {
+    this.data = require(IO.resolve('database', 'items', 'items.json'))
+  }
 
   constructor() {
-    this.data = require(IO.resolve('database', 'items', 'items.json'))
+    this.flush();
   }
 }
 
 export class LocationsShard implements IDatabaseShard {
-  data: Record<string, Location>;
+  data: Record<string, Location> = {};
 
-  constructor() {
+  flush() {
     const dir = IO.readDirSync(IO.resolve('database', 'locations'));
-
-    this.data = {};
 
     for (const file in dir) {
       const map = require(IO.resolve('database', 'locations', dir[file])) as Location;
 
       this.data[map.Id] = map;
     }
+  }
+
+  constructor() {
+    this.flush();
   }
 }

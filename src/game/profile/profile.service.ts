@@ -53,10 +53,10 @@ export class ProfileService {
         IO.serialize({ account, character }),
       );
       this.logger.log(`Created profile for ${account.nickname}.`);
-      return IO.deserialize(IO.readFileSync(IO.resolve(path, 'profile.json')));
+      this.databaseService.profilesShard.flush();
+      return this.getProfileById(account.aid);
     } else {
       this.logger.log(`Profile for ${account.nickname} already exists.`);
-      return IO.deserialize(IO.readFileSync(IO.resolve(path, 'profile.json')));
     }
   }
 }
