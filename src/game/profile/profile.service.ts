@@ -3,6 +3,7 @@ import { IO } from 'src/core/common/util/io/io.service';
 import { Profile, Character, Account } from './profile.types';
 import { TarkovID } from '../item/item.types';
 import { Logger } from '@nestjs/common';
+import { DatabaseService } from 'src/core/database/database.service';
 
 @Injectable()
 export class ProfileService {
@@ -10,31 +11,10 @@ export class ProfileService {
 
   public profiles: Record<TarkovID, Profile> = {};
 
-  constructor() {
-    this.loadProfiles();
+  constructor(private readonly databaseService: DatabaseService) {
+    this.profiles = databaseService.profilesShard.data;
 
     this.logger.debug(`Local accounts found: ${this.getAccounts().length}`);
-  }
-
-  private loadProfiles(): void {
-    IO.readDirSync('./profiles/').forEach((profile) => {
-      if (IO.isDir(`./profiles/${profile}`)) {
-        try {
-          const _p = IO.deserialize(
-            IO.readFileSync(`./profiles/${profile}/profile.json`),
-          ) as Record<string, any>;
-
-          const p = {
-            account: _p['account'],
-            character: _p['character'],
-          };
-
-          this.profiles[p.account.id] = p as Profile;
-        } catch (_) {
-          this.logger.error(`${profile} is missing a profile.json.`);
-        }
-      }
-    });
   }
 
   getProfiles(): Array<Profile> {

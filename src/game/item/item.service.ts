@@ -6,16 +6,16 @@ import { ItemsShard } from 'src/core/database/shards/shard.types';
 
 @Injectable()
 export class ItemService {
-  private readonly items: ItemsShard;
+  private readonly items: Record<ItemID, IItem<any>>;
   constructor(private readonly databaseService: DatabaseService) {
-    this.items = databaseService.itemsShard;
+    this.items = databaseService.itemsShard.data;
   }
 
   getAllItems(): Record<ItemID, IItem<any>> {
-    return this.items.data;
+    return this.items;
   }
 
   getItemByID(id: ItemID): IItem<any> {
-    return this.items.data[id] || null;
+    return this.items[id] || null;
   }
 }
