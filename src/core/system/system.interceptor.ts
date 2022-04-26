@@ -29,11 +29,8 @@ export class SystemInterceptor implements NestInterceptor {
       //response.setHeader('Content-Encoding', 'deflate');
     }
 
-    return next.handle().pipe(map(data => {
-      const response: Response = context.switchToHttp().getResponse();
-
-      // return _deflate(data).then(data);
-      return data;
+    return next.handle().pipe(map(async (res)  => {
+      return await (await _deflate(JSON.stringify(res))).toString();
     }))
   }
 }
