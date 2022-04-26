@@ -24,7 +24,6 @@ async function bootstrap(logger: Logger) {
 
   const app = await NestFactory.create<NestExpressApplication>(CoreModule);
 
-  app.use(compression({ encodings: ['deflate'], level: 9 }));
   app.useGlobalInterceptors(new SystemInterceptor());
   app.useStaticAssets(join(__dirname, '..', 'web', 'static'));
   app.setBaseViewsDir(join(__dirname, '..', 'web', 'views'));
