@@ -30,8 +30,9 @@ export class LauncherController {
     return 'poggers!';
   }
 
+  // @UseInterceptors(ZlibJSONInterceptor) ... when implemented.
   @Get('/launcher/server/version')
   launcher_server_version(): string {
-    return JSON.stringify(SystemService.Version);
+    return SystemService.Version;
   }
 }

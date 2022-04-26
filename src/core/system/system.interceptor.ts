@@ -5,11 +5,12 @@ import {
   CallHandler,
 } from '@nestjs/common';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators'
+import { map } from 'rxjs/operators';
 import { Logger } from '@nestjs/common';
-import { Response } from 'express';
-import * as zlib from 'zlib'
-import * as util from 'util'
+import { response, Response } from 'express';
+import { IO } from '../common/util/io/io.service';
+import * as zlib from 'zlib';
+import * as util from 'util';
 
 const _deflate = util.promisify(zlib.deflate);
 
@@ -25,12 +26,22 @@ export class SystemInterceptor implements NestInterceptor {
       }`,
     );
 
-    if (!req.headers['x-no-compression']) {
-      //response.setHeader('Content-Encoding', 'deflate');
-    }
+    const response: Response = context.switchToHttp().getResponse();
 
-    return next.handle().pipe(map(async (res)  => {
-      return await (await _deflate(JSON.stringify(res))).toString();
-    }))
+    response.setHeader('Content-Type', 'application/json');
+    response.setHeader('X-Powered-By', 'EmuTypekov');
+    response.setHeader('Set-Cookie', 'PHPSESSID=undefined');
+
+    return next.handle().pipe(
+      map(async (res) => {
+        const body = await _deflate(IO.cleanString(JSON.stringify(res)));
+
+        /*zlib.inflate(x, (err, buf) => {
+          console.log(buf.toString('utf-8'));
+        });*/
+
+        return body.toString('utf-8');
+      }),
+    );
   }
 }

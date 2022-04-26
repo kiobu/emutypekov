@@ -11,7 +11,7 @@ import * as boxen from 'boxen';
 export class SystemService {
   private static readonly logger = new Logger(SystemService.name);
   static readonly Server: string = 'EmuTypekov';
-  static readonly Version: string = '0.0.1';
+  static readonly Version: string = '2.3.0';
   static readonly Website: string = 'github.com/kiobu/emutypekov';
   static readonly Watermark: string =
     '\n' +

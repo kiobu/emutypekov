@@ -34,4 +34,14 @@ export class IO {
   static serialize(input: any): string {
     return JSON.stringify(input);
   }
+
+  static cleanString(s: string): any {
+    return s
+      .replace(/[\b]/g, '')
+      .replace(/[\f]/g, '')
+      .replace(/[\n]/g, '')
+      .replace(/[\r]/g, '')
+      .replace(/[\t]/g, '')
+      .replace(/[\\]/g, '');
+  }
 }
