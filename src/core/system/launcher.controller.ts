@@ -32,6 +32,6 @@ export class LauncherController {
 
   @Get('/launcher/server/version')
   launcher_server_version(): string {
-    return SystemService.Version;
+    return JSON.stringify(SystemService.Version);
   }
 }

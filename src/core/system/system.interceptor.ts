@@ -23,7 +23,7 @@ export class SystemInterceptor implements NestInterceptor {
     const response: Response = context.switchToHttp().getResponse();
 
     if (!req.headers['x-no-compression']) {
-      //response.setHeader('Content-Encoding', 'deflate');
+      response.setHeader('Content-Encoding', 'deflate');
     }
 
     return next.handle(); //.pipe();

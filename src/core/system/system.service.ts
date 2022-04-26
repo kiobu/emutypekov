@@ -11,12 +11,12 @@ import * as boxen from 'boxen';
 export class SystemService {
   private static readonly logger = new Logger(SystemService.name);
   static readonly Server: string = 'EmuTypekov';
-  static readonly Version: string = 'v0.0.1-dev';
+  static readonly Version: string = '0.0.1';
   static readonly Website: string = 'github.com/kiobu/emutypekov';
   static readonly Watermark: string =
     '\n' +
     boxen(
-      `${SystemService.Server}\n${SystemService.Version}\n${SystemService.Website}`,
+      `v${SystemService.Server}\n${SystemService.Version}\n${SystemService.Website}`,
       {
         padding: 1,
         margin: 1,
