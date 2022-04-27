@@ -5,7 +5,7 @@ import { SystemService } from './core/system/system.service';
 import { CoreModule } from './core/core.module';
 import { DebugModule } from './core/system/debug/debug.module';
 
-import { SystemInterceptor } from './core/system/system.interceptor';
+import { SystemInterceptor } from './core/system/interceptors/system.interceptor';
 
 import * as compression from 'compression';
 import { Logger } from '@nestjs/common';

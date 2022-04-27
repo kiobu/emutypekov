@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Render } from '@nestjs/common';
+import { Controller, Get, Post, Render, Req, UseInterceptors } from '@nestjs/common';
 import {
   ITarkovResponse,
   TarkovResponseEmpty,
@@ -8,6 +8,8 @@ import {
 import { CommonService } from '../common/common.service';
 import { SystemService } from './system.service';
 import { ProfileService } from 'src/game/profile/profile.service';
+import { Request } from '@nestjs/common';
+import { ZLibDeflateJSONInterceptor } from './interceptors/zlibjson.interceptor';
 
 @Controller()
 export class LauncherController {
@@ -16,6 +18,7 @@ export class LauncherController {
     private readonly profile: ProfileService,
   ) {}
 
+  @UseInterceptors(ZLibDeflateJSONInterceptor)
   @Get('/launcher/server/connect')
   launcher_server_connect(): Record<string, any> {
     return {
@@ -24,15 +27,22 @@ export class LauncherController {
       editions: this.profile.getAccountTypes(),
     };
   }
-
+  
+  @UseInterceptors(ZLibDeflateJSONInterceptor)
   @Get('/launcher/ping')
   launcher_ping(): string {
-    return 'poggers!';
+    return 'pong!';
   }
 
-  // @UseInterceptors(ZlibJSONInterceptor) ... when implemented.
+  @UseInterceptors(ZLibDeflateJSONInterceptor)
   @Get('/launcher/server/version')
   launcher_server_version(): string {
     return SystemService.Version;
+  }
+
+  @UseInterceptors(ZLibDeflateJSONInterceptor)
+  @Post('/launcher/profile/login')
+  launcher_profile_login(@Req() request: Request): any {
+    // ...
   }
 }
