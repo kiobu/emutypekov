@@ -8,17 +8,6 @@ import { LauncherController } from './launcher.controller';
 import { DatabaseModule } from '../database/database.module';
 import * as zlib from 'zlib';
 
-export function ZLibDeflate(target: any, propertyKey: string, descriptor: PropertyDescriptor) {
-  const original = descriptor.value;
-  if (typeof original == 'function') {
-    descriptor.value = function(...args) {
-      var result = original.apply(this, args);
-      return zlib.deflateSync(result);
-    }
-  }
-  return descriptor;
-}
-
 @Module({
   controllers: [SystemController, LauncherController],
   providers: [SystemService],
