@@ -39,6 +39,12 @@ export class ProfileService {
     });
   }
 
+  getProfileByName(name: string): Profile {
+    return this.getProfiles().find((profile) => {
+      return profile.account.nickname === name;
+    });
+  }
+
   getAccountTypes(): Array<string> {
     return IO.readDirSync(IO.resolve('database', 'patterns', 'profiles'));
   }

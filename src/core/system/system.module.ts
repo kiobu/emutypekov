@@ -7,10 +7,11 @@ import { ProfileModule } from 'src/game/profile/profile.module';
 import { LauncherController } from './launcher.controller';
 import { DatabaseModule } from '../database/database.module';
 import * as zlib from 'zlib';
+import { LauncherService } from './launcher.service';
 
 @Module({
   controllers: [SystemController, LauncherController],
-  providers: [SystemService],
+  providers: [SystemService, LauncherService],
   exports: [],
   imports: [CommonModule, DebugModule, ProfileModule, DatabaseModule],
 })

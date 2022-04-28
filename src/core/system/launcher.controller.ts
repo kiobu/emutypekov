@@ -8,14 +8,17 @@ import {
 import { CommonService } from '../common/common.service';
 import { SystemService } from './system.service';
 import { ProfileService } from 'src/game/profile/profile.service';
+import { Profile, Account } from 'src/game/profile/profile.types';
 import { Request } from '@nestjs/common';
 import { ZLibDeflateJSONInterceptor } from './interceptors/zlibjson.interceptor';
+import { LauncherService } from './launcher.service';
 
 @Controller()
 export class LauncherController {
   constructor(
     private readonly common: CommonService,
     private readonly profile: ProfileService,
+    private readonly launcher: LauncherService
   ) {}
 
   @UseInterceptors(ZLibDeflateJSONInterceptor)
@@ -41,8 +44,21 @@ export class LauncherController {
   }
 
   @UseInterceptors(ZLibDeflateJSONInterceptor)
+  @Post('/launcher/profile/get')
+  launcher_profile_get(@Req() request: Request): Record<string, any> {
+    return this.profile.getProfileByName(request.body['username'])['character']['Info'];
+  }
+
+  @UseInterceptors(ZLibDeflateJSONInterceptor)
   @Post('/launcher/profile/login')
-  launcher_profile_login(@Req() request: Request): any {
-    // ...
+  launcher_profile_login(@Req() request: Request): string {
+    if (!request.body) { return "FAILED" };
+    return this.profile.getProfileByName(request.body['username'])['account']['aid'];
+  }
+
+  @UseInterceptors(ZLibDeflateJSONInterceptor)
+  @Post('launcher/profile/info')
+  launcher_profile_info(@Req() request: Request) : Record<string, any> {
+    return this.launcher.getLauncherProfile(this.profile.getProfileByName(request.body['username']))
   }
 }
