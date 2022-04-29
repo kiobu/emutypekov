@@ -1,4 +1,11 @@
-import { Controller, Get, Post, Render, Req, UseInterceptors } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Render,
+  Req,
+  UseInterceptors,
+} from '@nestjs/common';
 import {
   ITarkovResponse,
   TarkovResponseEmpty,
@@ -18,7 +25,7 @@ export class LauncherController {
   constructor(
     private readonly common: CommonService,
     private readonly profile: ProfileService,
-    private readonly launcher: LauncherService
+    private readonly launcher: LauncherService,
   ) {}
 
   @UseInterceptors(ZLibDeflateJSONInterceptor)
@@ -30,7 +37,7 @@ export class LauncherController {
       editions: this.profile.getAccountTypes(),
     };
   }
-  
+
   @UseInterceptors(ZLibDeflateJSONInterceptor)
   @Get('/launcher/ping')
   launcher_ping(): string {
@@ -46,19 +53,27 @@ export class LauncherController {
   @UseInterceptors(ZLibDeflateJSONInterceptor)
   @Post('/launcher/profile/get')
   launcher_profile_get(@Req() request: Request): Record<string, any> {
-    return this.profile.getProfileByName(request.body['username'])['character']['Info'];
+    return this.profile.getProfileByUsername(request.body['username'])[
+      'account'
+    ];
   }
 
   @UseInterceptors(ZLibDeflateJSONInterceptor)
   @Post('/launcher/profile/login')
   launcher_profile_login(@Req() request: Request): string {
-    if (!request.body) { return "FAILED" };
-    return this.profile.getProfileByName(request.body['username'])['account']['aid'];
+    if (!request.body) {
+      return 'FAILED';
+    }
+    return this.profile.getProfileByUsername(request.body['username'])[
+      'account'
+    ]['aid'];
   }
 
   @UseInterceptors(ZLibDeflateJSONInterceptor)
   @Post('launcher/profile/info')
-  launcher_profile_info(@Req() request: Request) : Record<string, any> {
-    return this.launcher.getLauncherProfile(this.profile.getProfileByName(request.body['username']))
+  launcher_profile_info(@Req() request: Request): Record<string, any> {
+    return this.launcher.getLauncherProfile(
+      this.profile.getProfileByUsername(request.body['username']),
+    );
   }
 }

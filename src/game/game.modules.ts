@@ -5,6 +5,7 @@ import { ProfileModule } from './profile/profile.module';
 import { RaidModule } from './raid/raid.module';
 import { ItemModule } from './item/item.module';
 import { LocaleModule } from './locales/locale.module';
+import { SingleplayerModule } from './singleplayer/singleplayer.module';
 
 // All the game modules.
 @Module({
@@ -14,6 +15,7 @@ import { LocaleModule } from './locales/locale.module';
     LocationModule,
     ProfileModule,
     LocaleModule,
+    SingleplayerModule,
   ],
 })
 export class GameModules {}

@@ -12,6 +12,21 @@ export interface IDatabaseShard {
   flush?: () => void;
 }
 
+export class GlobalsShard implements IDatabaseShard {
+  data: Record<string, any> = {};
+
+  flush(): void {
+    if (this.data) {
+      delete require.cache[IO.resolve('database', 'globals.json')];
+    }
+    this.data = require(IO.resolve('database', 'globals.json'));
+  }
+
+  constructor() {
+    this.flush();
+  }
+}
+
 export class ProfilesShard implements IDatabaseShard {
   data: Record<TarkovID, Profile> = {};
 

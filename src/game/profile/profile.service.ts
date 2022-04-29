@@ -39,9 +39,9 @@ export class ProfileService {
     });
   }
 
-  getProfileByName(name: string): Profile {
+  getProfileByUsername(name: string): Profile {
     return this.getProfiles().find((profile) => {
-      return profile.account.nickname === name;
+      return profile.account.username === name;
     });
   }
 
@@ -50,7 +50,7 @@ export class ProfileService {
   }
 
   createProfile(account: Account, character: Character): Profile {
-    const path = IO.resolve('profiles', account.nickname);
+    const path = IO.resolve('profiles', account.username);
 
     if (!IO.exists(path)) {
       IO.mkdirSync(path);
@@ -58,11 +58,27 @@ export class ProfileService {
         IO.resolve(path, 'profile.json'),
         IO.serialize({ account, character }),
       );
-      this.logger.log(`Created profile for ${account.nickname}.`);
+      this.logger.log(`Created profile for ${account.username}.`);
       this.databaseService.profilesShard.flush();
       return this.getProfileById(account.aid);
     } else {
-      this.logger.log(`Profile for ${account.nickname} already exists.`);
+      this.logger.log(`Profile for ${account.username} already exists.`);
     }
+  }
+
+  getExperience(level: number): number {
+    const expTable =
+      this.databaseService.globals.data['config']['exp']['level']['exp_table'];
+    let exp = 0;
+
+    if (level >= expTable.length) {
+      level = expTable.length - 1;
+    }
+
+    for (let i = 0; i < level; i++) {
+      exp += expTable[i].exp;
+    }
+
+    return exp;
   }
 }

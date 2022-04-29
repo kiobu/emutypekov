@@ -5,7 +5,7 @@ export type Character = Record<string, unknown>;
 
 export class Account {
   aid: TarkovID;
-  nickname: string;
+  username: string;
   password: string;
   wipe: boolean;
   edition: string; // TODO: Edition enum?

@@ -7,12 +7,7 @@ import {
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Logger } from '@nestjs/common';
-import { response, Response } from 'express';
-import { IO } from 'src/core/common/util/io/io.service';
-import * as zlib from 'zlib';
-import * as util from 'util';
-
-const _deflate = util.promisify(zlib.deflate);
+import { Response } from 'express';
 
 @Injectable()
 export class SystemInterceptor implements NestInterceptor {

@@ -25,7 +25,7 @@ export class ProfileController {
     let p = this.profile.createProfile(
       {
         aid: '123456',
-        nickname: 'johndoe1',
+        username: 'johndoe1',
         password: 'johndoe1',
         wipe: false,
         edition: 'Standard',
