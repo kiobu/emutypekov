@@ -52,6 +52,9 @@ export class ProfileService {
   createProfile(account: Account, character: Character): Profile {
     const path = IO.resolve('profiles', account.username);
 
+    // TODO: I think I should move the IO operations all to the
+    // profile shard instead of doing it here in the game module.
+    // Maybe add to the shard interface?
     if (!IO.exists(path)) {
       IO.mkdirSync(path);
       IO.writeFileSync(
