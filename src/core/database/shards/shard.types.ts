@@ -1,3 +1,4 @@
+import { Logger } from '@nestjs/common';
 import { IO } from 'src/core/common/util/io/io.service';
 import { ItemID, IItem, TarkovID } from 'src/game/item/item.types';
 import { Location } from 'src/game/location/location.types';
@@ -8,11 +9,13 @@ import { Profile } from 'src/game/profile/profile.types';
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface IDatabaseShard {
+  readonly logger: Logger;
   data: any;
   flush?: () => void;
 }
 
 export class GlobalsShard implements IDatabaseShard {
+  readonly logger: Logger = new Logger(GlobalsShard.name);
   data: Record<string, any> = {};
 
   flush(): void {
@@ -20,6 +23,7 @@ export class GlobalsShard implements IDatabaseShard {
       delete require.cache[IO.resolve('database', 'globals.json')];
     }
     this.data = require(IO.resolve('database', 'globals.json'));
+    this.logger.log('Globals shard refreshed.');
   }
 
   constructor() {
@@ -28,12 +32,19 @@ export class GlobalsShard implements IDatabaseShard {
 }
 
 export class ProfilesShard implements IDatabaseShard {
+  readonly logger: Logger = new Logger(ProfilesShard.name);
   data: Record<TarkovID, Profile> = {};
 
   flush(): void {
     IO.readDirSync('profiles').forEach((profile) => {
       if (IO.isDir(IO.resolve('profiles', profile))) {
         try {
+          if (this.data) {
+            delete require.cache[
+              IO.resolve('profiles', profile, 'profile.json')
+            ];
+          }
+
           const _p = require(IO.resolve('profiles', profile, 'profile.json')) as Record<string, any>;
 
           const p = {
@@ -43,10 +54,11 @@ export class ProfilesShard implements IDatabaseShard {
 
           this.data[p.account.aid] = p as Profile;
         } catch (_) {
-          // Missing profile.json
+          this.logger.warn(`Profile ${profile} is missing a profile.json.`);
         }
       }
     });
+    this.logger.log('Profiles shard refreshed.');
   }
 
   constructor() {
@@ -55,10 +67,15 @@ export class ProfilesShard implements IDatabaseShard {
 }
 
 export class ItemsShard implements IDatabaseShard {
+  readonly logger: Logger = new Logger(ItemsShard.name);
   data: Record<ItemID, IItem<any>> = {};
-  
+
   flush() {
-    this.data = require(IO.resolve('database', 'items', 'items.json'))
+    if (this.data) {
+      delete require.cache[IO.resolve('database', 'items', 'items.json')];
+    }
+    this.data = require(IO.resolve('database', 'items', 'items.json'));
+    this.logger.log('Items shard refreshed.');
   }
 
   constructor() {
@@ -67,6 +84,7 @@ export class ItemsShard implements IDatabaseShard {
 }
 
 export class LocationsShard implements IDatabaseShard {
+  readonly logger: Logger = new Logger(LocationsShard.name);
   data: Record<string, Location> = {};
 
   flush() {
@@ -77,6 +95,7 @@ export class LocationsShard implements IDatabaseShard {
 
       this.data[map.Id] = map;
     }
+    this.logger.log('Locations shard refreshed.');
   }
 
   constructor() {

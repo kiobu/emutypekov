@@ -37,13 +37,16 @@ async function bootstrap(logger: Logger) {
   const common = app.select(CoreModule).get(CommonService);
 
   try {
-    await app.listen(common.serverConfig.port, common.serverConfig.address);
     logger.log(
       `${SystemService.Server} is listening on ${common.serverConfig.address}:${common.serverConfig.port}.`,
+    );
+    return await app.listen(
+      common.serverConfig.port,
+      common.serverConfig.address,
     );
   } catch (e) {
     logger.error(e);
   }
 }
 
-bootstrap(new Logger('Bootstrapper'));
+exports.app = bootstrap(new Logger('Bootstrapper'));

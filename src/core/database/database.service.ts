@@ -5,7 +5,6 @@ import {
   LocationsShard,
   ProfilesShard,
 } from './shards/shard.types';
-import { IO } from '../common/util/io/io.service';
 
 @Injectable()
 export class DatabaseService {
@@ -18,11 +17,12 @@ export class DatabaseService {
   public globals: Record<string, any>;
 
   constructor() {
+    this.logger.debug('Loading database...');
     this.itemsShard = new ItemsShard();
     this.locationsShard = new LocationsShard();
     this.profilesShard = new ProfilesShard();
     this.globals = new GlobalsShard();
 
-    this.logger.debug('Loaded database');
+    this.logger.debug('Loaded database.');
   }
 }

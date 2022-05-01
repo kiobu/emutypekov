@@ -1,0 +1,4 @@
+mod:
+  name: Debug Mod
+  author: kiobu
+  entrypoint: src/init.ts
