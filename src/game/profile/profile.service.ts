@@ -9,7 +9,7 @@ import { DatabaseService } from 'src/core/database/database.service';
 export class ProfileService {
   private readonly logger = new Logger(ProfileService.name);
 
-  public profiles: Record<TarkovID, Profile> = {};
+  private profiles: Record<TarkovID, Profile> = {};
 
   constructor(private readonly databaseService: DatabaseService) {
     this.profiles = databaseService.profilesShard.data;
