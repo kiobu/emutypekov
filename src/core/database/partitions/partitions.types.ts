@@ -7,12 +7,13 @@ import { Profile } from 'src/game/profile/profile.types';
 // every file on every change, but not sure yet.
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
-export interface IDatabaseShard {
+export interface IDatabasePartition {
   data: any;
   flush?: () => void;
+  update?: (any) => void;
 }
 
-export class GlobalsShard implements IDatabaseShard {
+export class GlobalsPartition implements IDatabasePartition {
   data: Record<string, any> = {};
 
   flush(): void {
@@ -27,10 +28,21 @@ export class GlobalsShard implements IDatabaseShard {
   }
 }
 
-export class ProfilesShard implements IDatabaseShard {
+export class ProfilesPartition implements IDatabasePartition {
   data: Record<TarkovID, Profile> = {};
 
-  flush(): void {
+  update(profile: Profile) {
+    this.data[profile.account.aid] = profile;
+
+    if (!IO.exists(IO.resolve('profiles', profile.account.username))) {
+      IO.mkdirSync(IO.resolve('profiles', profile.account.username));
+    }
+
+    IO.writeFileSync(IO.resolve('profiles', profile.account.username, 'profile.json'), IO.serialize(profile));
+  }
+
+  constructor() {
+
     IO.readDirSync('profiles').forEach((profile) => {
       if (IO.isDir(IO.resolve('profiles', profile))) {
         try {
@@ -48,13 +60,9 @@ export class ProfilesShard implements IDatabaseShard {
       }
     });
   }
-
-  constructor() {
-    this.flush();
-  }
 }
 
-export class ItemsShard implements IDatabaseShard {
+export class ItemsPartition implements IDatabasePartition {
   data: Record<ItemID, IItem<any>> = {};
   
   flush() {
@@ -66,7 +74,7 @@ export class ItemsShard implements IDatabaseShard {
   }
 }
 
-export class LocationsShard implements IDatabaseShard {
+export class LocationsPartition implements IDatabasePartition {
   data: Record<string, Location> = {};
 
   flush() {

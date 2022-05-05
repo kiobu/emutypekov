@@ -11,8 +11,20 @@ export class ProfileService {
 
   public profiles: Record<TarkovID, Profile> = {};
 
+  private handler: ProxyHandler<typeof this.profiles>;
+
   constructor(private readonly databaseService: DatabaseService) {
-    this.profiles = databaseService.profilesShard.data;
+
+    this.handler = {
+      set: function (target: typeof this.profiles, prop: TarkovID, val: Profile): boolean {
+        target[prop] = val;
+        databaseService.profilesPartition.update(val);
+  
+        return true;
+      }
+    }
+
+    this.profiles = new Proxy(databaseService.profilesPartition.data, this.handler);
 
     this.logger.debug(`Local accounts found: ${this.getAccounts().length}`);
   }
@@ -34,9 +46,7 @@ export class ProfileService {
   }
 
   getProfileById(id: string): Profile {
-    return this.getProfiles().find((profile) => {
-      return profile.account.aid === id;
-    });
+    return this.profiles[id];
   }
 
   getProfileByUsername(name: string): Profile {
@@ -50,23 +60,14 @@ export class ProfileService {
   }
 
   createProfile(account: Account, character: Character): Profile {
-    const path = IO.resolve('profiles', account.username);
-
-    // TODO: I think I should move the IO operations all to the
-    // profile shard instead of doing it here in the game module.
-    // Maybe add to the shard interface?
-    if (!IO.exists(path)) {
-      IO.mkdirSync(path);
-      IO.writeFileSync(
-        IO.resolve(path, 'profile.json'),
-        IO.serialize({ account, character }),
-      );
-      this.logger.log(`Created profile for ${account.username}.`);
-      this.databaseService.profilesShard.flush();
-      return this.getProfileById(account.aid);
-    } else {
-      this.logger.log(`Profile for ${account.username} already exists.`);
+    if (this.profiles[account.aid]) { 
+      this.logger.error(`Profile for ${account.aid} already exists.`);
+      return;
     }
+
+    this.profiles[account.aid] = { account, character} as Profile,
+    this.logger.log(`Created profile for ${account.username}.`);
+    return this.getProfileById(account.aid);
   }
 
   getExperience(level: number): number {

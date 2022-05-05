@@ -32,7 +32,5 @@ export class ProfileController {
       },
       {},
     );
-
-    console.log(p.account.aid);
   }
 }

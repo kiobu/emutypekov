@@ -1,27 +1,27 @@
 import { Injectable, Logger } from '@nestjs/common';
 import {
-  GlobalsShard,
-  ItemsShard,
-  LocationsShard,
-  ProfilesShard,
-} from './shards/shard.types';
+  GlobalsPartition,
+  ItemsPartition,
+  LocationsPartition,
+  ProfilesPartition,
+} from './partitions/partitions.types';
 import { IO } from '../common/util/io/io.service';
 
 @Injectable()
 export class DatabaseService {
   private readonly logger = new Logger(DatabaseService.name);
 
-  public itemsShard: ItemsShard;
-  public locationsShard: LocationsShard;
-  public profilesShard: ProfilesShard;
+  public itemsPartition: ItemsPartition;
+  public locationsPartition: LocationsPartition;
+  public profilesPartition: ProfilesPartition;
 
   public globals: Record<string, any>;
 
   constructor() {
-    this.itemsShard = new ItemsShard();
-    this.locationsShard = new LocationsShard();
-    this.profilesShard = new ProfilesShard();
-    this.globals = new GlobalsShard();
+    this.itemsPartition = new ItemsPartition();
+    this.locationsPartition = new LocationsPartition();
+    this.profilesPartition = new ProfilesPartition();
+    this.globals = new GlobalsPartition();
 
     this.logger.debug('Loaded database');
   }
